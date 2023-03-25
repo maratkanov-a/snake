@@ -1,3 +1,6 @@
+use snake_game::game;
+
 fn main() {
-    println!("Hello, world!")
+    let game = game::Game::new(10, 10);
+    game::Game::start(game);
 }
