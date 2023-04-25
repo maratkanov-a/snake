@@ -32,8 +32,7 @@ impl Snake {
     }
 
     pub fn make_move(&mut self) {
-        let (x, y, d) = self.positions.get(0).unwrap();
-        let (x, y, d) = (*x, *y, *d);
+        let (x, y, d) = self.positions.get(0).cloned().unwrap();
 
         self.positions.pop();
 
@@ -49,8 +48,7 @@ impl Snake {
     }
 
     pub fn change_direction(&mut self, nd: Direction) {
-        let (px, py, pd) = self.positions.get(0).unwrap();
-        let (px, py, pd) = (*px, *py, *pd);
+        let (px, py, pd) = self.positions.get(0).cloned().unwrap();
 
         let np = match pd {
             Direction::Up => match nd {
@@ -84,8 +82,7 @@ impl Snake {
     }
 
     fn get_pos(&self, i: usize, p: &Position) -> Box<Pos> {
-        let (x, y, d) = p;
-        let (x, y, d) = (*x, *y, *d);
+        let (x, y, d) = p.clone();
 
         let pos = match d {
             Direction::Up if i == 0 => (x, y, '^'),

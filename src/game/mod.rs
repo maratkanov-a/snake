@@ -64,10 +64,7 @@ impl Game {
     }
 
     fn has_intersection(&mut self) {
-        let (x, y) = {
-            let (x, y, _) = self.snake.get_positions().get(0).unwrap();
-            (*x, *y)
-        };
+        let (x, y, _) = self.snake.get_positions().get(0).cloned().unwrap();
 
         if x == self.x - 1 || y == self.y - 1 || x == 0 || y == 0 {
             self.status = Status::Ended;
@@ -116,7 +113,6 @@ impl Game {
         // end of initial draw
 
         let ms = menu_sender.clone();
-        let ss = status_sender.clone();
         // every tick thread
         let game = std::thread::spawn(move || {
             std::thread::park();

@@ -2,15 +2,11 @@
 mod apple_test;
 
 use rand::Rng;
-use std::collections::HashMap;
+use std::collections::HashSet;
 use std::vec;
 
 use crate::snake::Position;
 use crate::{Drawable, Pos};
-
-enum Key {
-    None,
-}
 
 pub struct Apple {
     x: usize,
@@ -27,16 +23,16 @@ impl Apple {
 
         let mut nx: usize = 0;
         let mut ny: usize = 0;
-        let mut position_map = HashMap::new();
+        let mut position_set = HashSet::new();
         for v in ps {
-            position_map.insert((v.0, v.1), Key::None);
+            position_set.insert((v.0, v.1));
         }
 
         for _ in 0..x * y {
             let gx = rng.gen_range(1..x - 1);
             let gy = rng.gen_range(1..y - 1);
 
-            if position_map.contains_key(&(gx, gy)) {
+            if position_set.contains(&(gx, gy)) {
                 continue;
             }
 
@@ -56,7 +52,7 @@ impl Apple {
 
 impl Drawable for Apple {
     fn pos(&self) -> Vec<Pos> {
-        let mut v = vec::Vec::with_capacity(1);
+        let mut v = Vec::with_capacity(1);
         v.push((self.x, self.y, '•'));
         v
     }
